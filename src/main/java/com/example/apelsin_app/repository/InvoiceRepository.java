@@ -12,4 +12,7 @@ import java.util.List;
 public interface InvoiceRepository extends JpaRepository<Invoice,Long> {
     @Query(nativeQuery = true, value = "select * from invoice where issued>invoice.due")
     List<Invoice> findAllByIssuedAfterDue();
+
+    @Query(nativeQuery = true, value = "select * from invoice i join orders o on i.order_id = o.id where issued<o.date")
+    List<Invoice> findAllBywrongDateInvoice();
 }
